@@ -39,10 +39,18 @@ export function Select(props: SelectPropsType) {
                         : props.items[i - 1]
                     if (pretendentElement) {
                         props.onChange(pretendentElement.value)
-                        break;
+                        return;
                     }
                 }
             }
+            if(!selectedItems){
+                props.onChange(props.items[0].value)
+            }
+
+        }
+
+        if(e.key === "Enter" || e.key==="Escape"){
+            setActive(false)
         }
     }
     return (
