@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 export default {
     title: 'useMemo',
@@ -63,9 +63,63 @@ export const HelpsReactMemo = () => {
     }, [users])
     return <>
         <button onClick={() => setCounter(counter + 1)}>+</button>
-        <button onClick={addUser}>add</button>
         {counter}
         <Users users={newArray}/>
     </>
 
 }
+// export const likeUseCallback = () => {
+//     const addBook=()=>{
+//         const newUsers=[...books,'angular' + new Date().getTime()]
+//         setBooks(newUsers)
+//     }
+//     const [counter, setCounter] = useState(0)
+//     const [books, setBooks] = useState(['React', 'js', 'vue'])
+//     let newArray = useMemo(() => {
+//         return books.filter(books => books.toLowerCase().indexOf('a') > -1)
+//     }, [books])
+//     return <>
+//         <button onClick={() => setCounter(counter + 1)}>+</button>
+//         {counter}
+//         <Book books={newArray} addBook={addBook}/>
+//     </>
+// }
+// const BooksSecret = (props: { books: Array<string>,addBook:()=>void }) => {
+//     return <div>
+//         <button onClick={props.addBook}>add</button>
+//         {props.books.map((b, i) => <div key={i}>{b}</div>)}</div>
+// }
+// const Book = React.memo(BooksSecret)
+
+
+
+
+export const LikeUseCallback = React.memo( () => {
+
+    const addBook=()=>{
+        const newUsers=[...books,'angular' + new Date().getTime()]
+        setBooks(newUsers)
+    }
+
+    const [counter, setCounter] = useState<number>(0)
+    const [books, setBooks] = useState(['book1', 'book2', 'book3', 'book4'])
+
+    const memoizedAddBookWithCallback = useCallback(() => addBook(), [books])
+
+    return(
+        <div>
+            <button onClick={() => setCounter(counter + 1)}>+</button>
+            {counter}
+            <Book  addBook={memoizedAddBookWithCallback}/>
+        </div>
+    )
+})
+
+
+const BooksSecret = React.memo((props: { addBook: () => void}) => {
+    console.log('BOOKS')
+    return <div>
+        <button onClick={props.addBook}> Add book</button>
+    </div>
+})
+const Book = React.memo(BooksSecret)
