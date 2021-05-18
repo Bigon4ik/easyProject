@@ -8,19 +8,29 @@ export default {
 
 export const SimpleExample1 = () => {
 
-    const [counter, setCounter] = useState(1)
+    const [hours, setHours] = useState(0)
+    const [min, setMin] = useState(0)
+    const [second, setSecond] = useState(0)
 
 
     useEffect(() => {
 
-        setInterval(() => {setCounter((state)=>state+1)
+        setInterval(() => {
+            setHours((state) => state + 1)
+        }, 6000000)
+        setInterval(() => {
+            setMin((state) => state + 1)
+        }, 60000)
+        setInterval(() => {
+            setSecond((state) => state +1)
         }, 1000)
 
     }, [])
-
+    const clock = new Date()
     return <>
-        Hello,{counter}
-
+        {hours}:{min}:{second}
+        <br/>
+        {clock.getHours()}:{clock.getMinutes()}:{clock.getSeconds()}
     </>
 
 }
