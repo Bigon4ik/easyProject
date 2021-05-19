@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import styles from './clock.module.css'
 
 
 type PropsType = {
@@ -36,11 +37,11 @@ export const Clock: React.FC<PropsType> = (props) => {
     </div>
 }
 
-type ClockViewPropsType={
-    date:Date
+type ClockViewPropsType = {
+    date: Date
 }
-export const DigitalClockView:React.FC<ClockViewPropsType>=({date})=>{
-    return<>
+export const DigitalClockView: React.FC<ClockViewPropsType> = ({date}) => {
+    return <>
         <span>{getDigital(date.getSeconds())}</span>
         :
         <span>{getDigital(date.getMinutes())}</span>
@@ -49,6 +50,26 @@ export const DigitalClockView:React.FC<ClockViewPropsType>=({date})=>{
     </>
 
 }
-export const AnalogClockView:React.FC<ClockViewPropsType>=({date})=>{
-    return <span>Analog</span>
+
+
+export const AnalogClockView: React.FC<ClockViewPropsType> = ({date}) => {
+    const secondsStyle = {
+        transform: `rotate(${date.getSeconds() * 6}deg)`
+    };
+    const minutesStyle = {
+        transform: `rotate(${date.getMinutes() * 6}deg)`
+    };
+    const hoursStyle = {
+        transform: `rotate(${date.getHours() * 30}deg)`
+    };
+    return (
+        <div className={styles.clock}>
+            <div className={styles["analog-clock"]}>
+                <div className={`${styles.dial} ${styles.seconds}`} style={secondsStyle}/>
+                <div className={`${styles.dial} ${styles.minutes}`} style={minutesStyle}/>
+                <div className={`${styles.dial} ${styles.hours}`} style={hoursStyle}/>
+            </div>
+
+        </div>
+    )
 }
