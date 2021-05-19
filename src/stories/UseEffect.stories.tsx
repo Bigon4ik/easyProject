@@ -22,7 +22,7 @@ export const SimpleExample1 = () => {
             setMin((state) => state + 1)
         }, 60000)
         setInterval(() => {
-            setSecond((state) => state +1)
+            setSecond((state) => state + 1)
         }, 1000)
 
     }, [])
@@ -31,6 +31,45 @@ export const SimpleExample1 = () => {
         {hours}:{min}:{second}
         <br/>
         {clock.getHours()}:{clock.getMinutes()}:{clock.getSeconds()}
+    </>
+
+}
+export const ResetEffectExample1 = () => {
+
+    const [count, setCount] = useState(0)
+
+
+    useEffect(() => {
+        console.log('dsfsd')
+
+    }, [])
+    let increase = () => {
+        setCount(count + 1)
+    }
+
+    return <>
+        Hello, counter: {count}
+        <button onClick={increase}></button>
+    </>
+
+}
+export const KeysTrackerExample = () => {
+
+    const [text, setText] = useState('')
+
+
+    useEffect(() => {
+        const handler = (e: KeyboardEvent) => {
+            setText(text + e.key)
+        };
+        window.addEventListener('keypress', handler);
+        return () => {
+            window.removeEventListener('keypress', handler);
+        }
+    }, [text])
+
+    return <>
+        Typed text: {text}
     </>
 
 }
